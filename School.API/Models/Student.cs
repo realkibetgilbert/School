@@ -1,6 +1,6 @@
 ﻿namespace School.API.Models
 {
-    public class Student
+    public class Student:Base
     {
         public long Id { get; set; }
         public string Name { get; set; }
