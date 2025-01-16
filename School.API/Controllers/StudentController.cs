@@ -36,8 +36,6 @@ namespace School.API.Controllers
             return Ok(student);
         }
 
-        //LSIT STUDNE
-
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
