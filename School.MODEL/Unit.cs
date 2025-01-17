@@ -1,4 +1,4 @@
-﻿namespace School.API.Models
+﻿namespace School.MODEL
 {
     public class Unit : Base
     {

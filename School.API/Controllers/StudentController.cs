@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Students;
-using School.API.Models;
+using School.MODEL;
 
 namespace School.API.Controllers
 {
@@ -21,11 +20,13 @@ namespace School.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] StudentToCreateDto studentToCreateDto)
         {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); };
             //dto for us to save in db we neeed to map to table.....model
             var student = new Student
             {
                 Name = studentToCreateDto.Name,
                 RegistrationNumber = studentToCreateDto.RegistrationNumber,
+                HostelId = studentToCreateDto.HostelId,
                 DateOfJoin = studentToCreateDto.DateOfJoin,
                 IsActive = studentToCreateDto.IsActive,
                 CreatedOn = DateTime.Now,
@@ -39,7 +40,7 @@ namespace School.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await schoolDbContext.Students.ToListAsync());
+            return Ok(await schoolDbContext.Students.Include(h=>h.Hostel).ToListAsync());
         }
 
         [HttpGet]

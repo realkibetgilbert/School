@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Units;
-using School.API.Models;
+using School.MODEL;
 
 namespace School.API.Controllers
 {
@@ -77,7 +76,7 @@ namespace School.API.Controllers
 
         [HttpDelete]
         [Route("{id:long}")]
-        public async Task<IActionResult> DeleteUnitAsync(long id)
+        public async Task<IActionResult> DeleteUnitAsync([FromRoute] long id)
         {
             var unit = await schooDbContext.Units.FindAsync(id);
             if (unit == null)
