@@ -31,10 +31,32 @@ namespace School.API.Controllers
             await _schoolDbContext.SaveChangesAsync();
             return Ok(hostel);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
             return Ok(await _schoolDbContext.Hostels.ToListAsync());
+        }
+
+        [HttpPut]
+        [Route("{id:long}")]
+        public async Task<IActionResult> UpdateHostelAsync(long id, UpdateHostelDto updateHostelDto)
+        {
+            var hostel = await _schoolDbContext.Hostels.FindAsync(id);
+
+            if (hostel == null) return NotFound();
+
+            hostel.Name = updateHostelDto.Name;
+            hostel.Description = updateHostelDto.Description;
+            hostel.CreatedOn = DateTime.Now;
+            hostel.CreatedBy = "System";
+
+            await _schoolDbContext.SaveChangesAsync();
+            return Ok(hostel);
+
+           
+            
+
         }
 
 
