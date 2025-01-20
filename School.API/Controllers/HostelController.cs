@@ -54,9 +54,18 @@ namespace School.API.Controllers
             await _schoolDbContext.SaveChangesAsync();
             return Ok(hostel);
 
-           
-            
+        }
 
+        [HttpDelete]
+        [Route("{id:long}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] long id)
+        {
+            var hostel = await _schoolDbContext.Hostels.FindAsync(id);
+
+
+            _schoolDbContext.Hostels.Remove(hostel);
+            await _schoolDbContext.SaveChangesAsync();
+            return Ok();
         }
 
 
