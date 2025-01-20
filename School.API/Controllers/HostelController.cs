@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Hostel;
+using School.API.Interfaces.implementations;
 using School.MODEL;
 
 namespace School.API.Controllers
@@ -11,10 +12,12 @@ namespace School.API.Controllers
     public class HostelController : ControllerBase
     {
         private readonly SchoolDbContext _schoolDbContext;
+        private readonly IHostelService _hostelService;
 
-        public HostelController(SchoolDbContext schoolDbContext)
+        public HostelController(SchoolDbContext schoolDbContext, IHostelService hostelService)
         {
             _schoolDbContext = schoolDbContext;
+            _hostelService = hostelService;
         }
 
         [HttpPost]
@@ -27,15 +30,20 @@ namespace School.API.Controllers
                 CreatedOn = DateTime.Now,
                 CreatedBy = "system",
             };
-            await _schoolDbContext.Hostels.AddAsync(hostel);
-            await _schoolDbContext.SaveChangesAsync();
-            return Ok(hostel);
+            return Ok(await _hostelService.CreateAsync(hostel));
+        }
+
+        [HttpGet]
+        [Route("{id:long}")]
+        public async Task<IActionResult> GetAsync([FromRoute] long id)
+        {
+            return Ok(await _hostelService.GetByIdAsync(id));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _schoolDbContext.Hostels.ToListAsync());
+            return Ok(await _hostelService.GetAllAsync());
         }
 
         [HttpPut]
@@ -60,12 +68,11 @@ namespace School.API.Controllers
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {
-            var hostel = await _schoolDbContext.Hostels.FindAsync(id);
+            var result = await _hostelService.DeleteAsync(id);
+            if (result == null)
+            { return NotFound(); };
 
-
-            _schoolDbContext.Hostels.Remove(hostel);
-            await _schoolDbContext.SaveChangesAsync();
-            return Ok();
+            return Ok(result);
         }
 
 
