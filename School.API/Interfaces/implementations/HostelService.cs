@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.API.Data;
+using School.API.Dto.Hostel;
 using School.MODEL;
 
 namespace School.API.Interfaces.implementations
@@ -37,6 +38,21 @@ namespace School.API.Interfaces.implementations
         public async Task<Hostel?> GetByIdAsync(long id)
         {
             return await _schoolDbContext.Hostels.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<Hostel?> UpdateHostelAsync(long id, UpdateHostelDto updateHostelDto)
+        {
+            var hostel = await _schoolDbContext.Hostels.FindAsync(id);
+
+            if (hostel == null) return null;
+
+            hostel.Name = updateHostelDto.Name;
+            hostel.Description = updateHostelDto.Description;
+            hostel.CreatedOn = DateTime.Now;
+            hostel.CreatedBy = "System";
+
+            await _schoolDbContext.SaveChangesAsync();
+            return hostel;
         }
     }
 }

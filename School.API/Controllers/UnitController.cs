@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Units;
+using School.API.Interfaces.unitsImplementations;
 using School.MODEL;
 
 namespace School.API.Controllers
@@ -11,10 +12,12 @@ namespace School.API.Controllers
     public class UnitController : ControllerBase
     {
         private readonly SchoolDbContext schooDbContext;
+        private readonly IUnitService _unitService;
 
-        public UnitController(SchoolDbContext schooDbContext)
+        public UnitController(SchoolDbContext schooDbContext, IUnitService unitService)
         {
             this.schooDbContext = schooDbContext;
+            _unitService = unitService;
         }
 
         //https://localhost.com/api/unit/create
@@ -28,66 +31,44 @@ namespace School.API.Controllers
                 Status = unitToCreateDto.Status,
                 CreatedOn = DateTime.Now,
                 CreatedBy = "system",
-            };
+            };          
 
-            await schooDbContext.Units.AddAsync(unit);
-            await schooDbContext.SaveChangesAsync();
-
-            return Ok(unit);
+            return Ok(await _unitService.CreateAsync(unit));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await schooDbContext.Units.ToListAsync());
+            return Ok(await _unitService.GetAllAsync());
         }
 
         [HttpGet]
         [Route("{id:long}")]
         public async Task<IActionResult> GetAsyncById(long id)
         {
-            var unit = await schooDbContext.Units.FindAsync(id);
-
-            if (unit == null )
-            {
-                return NotFound();
-            }
-            return Ok(unit);
+            return Ok(await _unitService.GetByIdAsync(id));
         }
 
         [HttpPut]
         [Route("{id:long}")]
         public async Task<IActionResult> UpdateStudentAsync(long id, UpdateUnitDto updateUnitDto)
         {
-            var unit = await schooDbContext.Units.FindAsync(id);
-            if (unit is null)
-            {
-                return NotFound();
-            }
-            unit.UnitName = updateUnitDto.UnitName;
-            unit.UnitCode = updateUnitDto.UnitCode;
-            unit.Status = updateUnitDto.Status;
-            unit.CreatedOn = DateTime.Now;
-            unit.CreatedBy = "system";
+            var result = await _unitService.UpdateUnitAsync(id, updateUnitDto);
+            if (result is null) return NotFound();
 
-            await schooDbContext.SaveChangesAsync();
-            return Ok(unit);
+            return Ok(result);
         }
 
         [HttpDelete]
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteUnitAsync([FromRoute] long id)
         {
-            var unit = await schooDbContext.Units.FindAsync(id);
-            if (unit == null)
-            {
-                return NotFound();
-            }
+           var result = await _unitService.DeleteAsync(id);
+            if (result is null) return NotFound();
 
-             schooDbContext.Units.Remove(unit);
-            await schooDbContext.SaveChangesAsync();
+            return Ok(result);
 
-            return Ok();
+            
         }
       
     }

@@ -50,17 +50,10 @@ namespace School.API.Controllers
         [Route("{id:long}")]
         public async Task<IActionResult> UpdateHostelAsync(long id, UpdateHostelDto updateHostelDto)
         {
-            var hostel = await _schoolDbContext.Hostels.FindAsync(id);
+            var result = await _hostelService.UpdateHostelAsync(id, updateHostelDto);
+            if (result is null) return NotFound();
 
-            if (hostel == null) return NotFound();
-
-            hostel.Name = updateHostelDto.Name;
-            hostel.Description = updateHostelDto.Description;
-            hostel.CreatedOn = DateTime.Now;
-            hostel.CreatedBy = "System";
-
-            await _schoolDbContext.SaveChangesAsync();
-            return Ok(hostel);
+            return Ok(result);
 
         }
 

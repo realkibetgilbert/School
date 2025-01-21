@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Students;
+using School.API.Interfaces.studentsImplementations;
+using School.API.Migrations;
 using School.MODEL;
 
 namespace School.API.Controllers
@@ -11,10 +13,12 @@ namespace School.API.Controllers
     public class StudentController : ControllerBase
     {
         private readonly SchoolDbContext schoolDbContext;
+        private readonly IStudentService _studentService;
 
-        public StudentController(SchoolDbContext schoolDbContext)
+        public StudentController(SchoolDbContext schoolDbContext, IStudentService studentService)
         {
             this.schoolDbContext = schoolDbContext;
+            _studentService = studentService;
         }
         //https://localhost.com/api/Student/Create
         [HttpPost]
@@ -32,66 +36,41 @@ namespace School.API.Controllers
                 CreatedOn = DateTime.Now,
                 CreatedBy = "system",
             };
-            await schoolDbContext.Students.AddAsync(student);
-            await schoolDbContext.SaveChangesAsync();
-            return Ok(student);
+            return Ok(await _studentService.CreateAsync(student));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await schoolDbContext.Students.Include(h=>h.Hostel).ToListAsync());
+            return Ok(await _studentService.GetAllAsync());
         }
 
         [HttpGet]
         [Route("{id:long}")]
         public async Task<IActionResult> GetAsyncById(long id)
         {
-
-            var student = schoolDbContext.Students.Find(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(await schoolDbContext.Students.FindAsync(id));
+            return Ok( await _studentService.GetByIdAsync(id));
         }
 
         [HttpPut]
         [Route("{id:long}")]
         public async Task<IActionResult> PutAsyncById(long id, UpdateStudentDto updateStudentDto)
         {
-            
-            var student = schoolDbContext.Students.Find(id);
-            if (student == null) 
-            {
-                return NotFound();
-            }
-            {
-                student.Name = updateStudentDto.Name;
-                student.RegistrationNumber = updateStudentDto.RegistrationNumber;
-                student.DateOfJoin = updateStudentDto.DateOfJoin;
-                student.IsActive = updateStudentDto.IsActive;
-                student.CreatedOn = DateTime.Now;
-                student.CreatedBy = "system";
-            };
+            var result = await _studentService.UpdateAsync(id, updateStudentDto);
+            if (result is null) return NotFound();
 
-            await schoolDbContext.SaveChangesAsync();
-            return Ok(student);
+            return Ok(result);
+           
         }
 
         [HttpDelete]
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteAsync(long id)
         {
-            var student = await schoolDbContext.Students.FindAsync(id);
+           var result = await _studentService.DeleteAsync(id);
+            if (result is null) return NotFound();
 
-
-
-             schoolDbContext.Students.Remove(student);
-            await schoolDbContext.SaveChangesAsync();   
-
-            return Ok();
+            return Ok(result);
         }
 
     }
