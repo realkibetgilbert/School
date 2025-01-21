@@ -11,12 +11,12 @@ namespace School.API.Controllers
     [ApiController]
     public class HostelController : ControllerBase
     {
-        private readonly SchoolDbContext _schoolDbContext;
+       
         private readonly IHostelService _hostelService;
 
         public HostelController(SchoolDbContext schoolDbContext, IHostelService hostelService)
         {
-            _schoolDbContext = schoolDbContext;
+           
             _hostelService = hostelService;
         }
 

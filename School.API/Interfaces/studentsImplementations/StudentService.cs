@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Students;
 using School.MODEL;
@@ -8,10 +9,12 @@ namespace School.API.Interfaces.studentsImplementations
     public class StudentService : IStudentService
     {
         private readonly SchoolDbContext _schoolDbContext;
+        private readonly IMapper _mapper;
 
-        public StudentService(SchoolDbContext schoolDbContext)
+        public StudentService(SchoolDbContext schoolDbContext,IMapper mapper)
         {
             _schoolDbContext = schoolDbContext;
+            _mapper = mapper;
         }
 
         public async Task<Student> CreateAsync(Student student)
@@ -36,6 +39,8 @@ namespace School.API.Interfaces.studentsImplementations
         public async Task<List<Student>> GetAllAsync()
         {
             return await _schoolDbContext.Students.Include(h => h.Hostel).ToListAsync();
+            
+            // Map the list of students to StudentToDisplayDto
         }
 
         public async Task<Student?> GetByIdAsync(long id)

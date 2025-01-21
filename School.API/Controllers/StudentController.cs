@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Students;
@@ -12,13 +13,15 @@ namespace School.API.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly SchoolDbContext schoolDbContext;
-        private readonly IStudentService _studentService;
 
-        public StudentController(SchoolDbContext schoolDbContext, IStudentService studentService)
+        private readonly IStudentService _studentService;
+        private readonly IMapper _mapper;
+
+        public StudentController(IStudentService studentService, IMapper mapper)
         {
-            this.schoolDbContext = schoolDbContext;
+
             _studentService = studentService;
+            _mapper = mapper;
         }
         //https://localhost.com/api/Student/Create
         [HttpPost]
@@ -26,30 +29,23 @@ namespace School.API.Controllers
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); };
             //dto for us to save in db we neeed to map to table.....model
-            var student = new Student
-            {
-                Name = studentToCreateDto.Name,
-                RegistrationNumber = studentToCreateDto.RegistrationNumber,
-                HostelId = studentToCreateDto.HostelId,
-                DateOfJoin = studentToCreateDto.DateOfJoin,
-                IsActive = studentToCreateDto.IsActive,
-                CreatedOn = DateTime.Now,
-                CreatedBy = "system",
-            };
+            var student =_mapper.Map<Student>(studentToCreateDto);
             return Ok(await _studentService.CreateAsync(student));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _studentService.GetAllAsync());
+            var students =await _studentService.GetAllAsync();
+            return  Ok(_mapper.Map<List<StudentToDisplayDto>>(students));
+
         }
 
         [HttpGet]
         [Route("{id:long}")]
         public async Task<IActionResult> GetAsyncById(long id)
         {
-            return Ok( await _studentService.GetByIdAsync(id));
+            return Ok(await _studentService.GetByIdAsync(id));
         }
 
         [HttpPut]
@@ -60,14 +56,14 @@ namespace School.API.Controllers
             if (result is null) return NotFound();
 
             return Ok(result);
-           
+
         }
 
         [HttpDelete]
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteAsync(long id)
         {
-           var result = await _studentService.DeleteAsync(id);
+            var result = await _studentService.DeleteAsync(id);
             if (result is null) return NotFound();
 
             return Ok(result);

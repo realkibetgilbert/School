@@ -3,6 +3,7 @@ using School.API.Data;
 using School.API.Interfaces.implementations;
 using School.API.Interfaces.studentsImplementations;
 using School.API.Interfaces.unitsImplementations;
+using School.API.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IHostelService, HostelService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
