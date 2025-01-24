@@ -25,7 +25,7 @@ namespace School.API.Utils
             // db=>ui
             CreateMap<Unit, UnitToDisplayDto>().ReverseMap();
 
-            //mapping units 
+            //mapping Hostels 
             //s=>d
             CreateMap<HostelToCreateDto, Hostel>()
   .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system"))

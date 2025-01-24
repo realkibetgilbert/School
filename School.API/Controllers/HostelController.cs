@@ -42,7 +42,8 @@ namespace School.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _hostelService.GetAllAsync());
+            List<Hostel> hostel = await _hostelService.GetAllAsync();
+            return Ok(_mapper.Map<List<HostelToDisplayDto>>(hostel));
         }
 
         [HttpPut]

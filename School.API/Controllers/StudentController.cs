@@ -45,7 +45,8 @@ namespace School.API.Controllers
         [Route("{id:long}")]
         public async Task<IActionResult> GetAsyncById(long id)
         {
-            return Ok(await _studentService.GetByIdAsync(id));
+            var student = await _studentService.GetByIdAsync(id);
+            return Ok(_mapper.Map<StudentToDisplayDto>(student));
         }
 
         [HttpPut]

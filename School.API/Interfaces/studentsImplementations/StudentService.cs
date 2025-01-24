@@ -46,6 +46,7 @@ namespace School.API.Interfaces.studentsImplementations
         public async Task<Student?> GetByIdAsync(long id)
         {
             return await _schoolDbContext.Students.FirstOrDefaultAsync(x => x.Id == id);
+            //return await _schoolDbContext.Students.FindAsync(id);
         }
 
         public async Task<Student?> UpdateAsync(long id, UpdateStudentDto updateStudentDto)

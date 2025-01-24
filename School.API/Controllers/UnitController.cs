@@ -26,18 +26,7 @@ namespace School.API.Controllers
         //https://localhost.com/api/unit/create
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] UnitToCreateDto unitToCreateDto)
-        {
-            //var unit = new Unit
-            //{
-            //    UnitName = unitToCreateDto.UnitName,
-            //    UnitCode = unitToCreateDto.UnitCode,
-            //    Status = unitToCreateDto.Status,
-            //    CreatedOn = DateTime.Now,
-            //    CreatedBy = "system",
-            //};          
-
-            //d=>s
-
+        { 
             var unit = _mapper.Map<Unit>(unitToCreateDto);
             return Ok(await _unitService.CreateAsync(unit));
         }
@@ -46,35 +35,15 @@ namespace School.API.Controllers
         public async Task<IActionResult> GetAsync()
         {
             List<Unit> units = await _unitService.GetAllAsync();
-            //List<UnitToDisplayDto> listToDisplay = units.Select(unit => new UnitToDisplayDto
-            //{
-            //    Id = unit.Id,
-            //    UnitName = unit.UnitName,
-            //    UnitCode = unit.UnitCode,
-            //    Status = unit.Status
-            //}).ToList();
-         var listToDisplay1 = _mapper.Map<List<UnitToDisplayDto>>(units);
-            return Ok(listToDisplay1);
-            
-
-
+            return Ok(_mapper.Map<List<UnitToDisplayDto>>(units));           
         }
 
         [HttpGet]
         [Route("{id:long}")]
         public async Task<IActionResult> GetAsyncById(long id)
         {
-           var unit= await _unitService.GetByIdAsync(id);
-            var unitToDisplay1 = new UnitToDisplayDto
-            {
-                Id = unit.Id,
-                UnitName = unit.UnitName,
-                UnitCode = unit.UnitCode,
-                Status = unit.Status
-            };
-
-            var unitToDisplay2= _mapper.Map<UnitToDisplayDto>(unit);
-            return Ok(unitToDisplay1);
+           var unit= await _unitService.GetByIdAsync(id);                     
+            return Ok(_mapper.Map<UnitToDisplayDto>(unit));
         }
 
         [HttpPut]
