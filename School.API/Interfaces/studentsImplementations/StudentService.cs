@@ -11,7 +11,7 @@ namespace School.API.Interfaces.studentsImplementations
         private readonly SchoolDbContext _schoolDbContext;
         private readonly IMapper _mapper;
 
-        public StudentService(SchoolDbContext schoolDbContext,IMapper mapper)
+        public StudentService(SchoolDbContext schoolDbContext, IMapper mapper)
         {
             _schoolDbContext = schoolDbContext;
             _mapper = mapper;
@@ -39,7 +39,7 @@ namespace School.API.Interfaces.studentsImplementations
         public async Task<List<Student>> GetAllAsync()
         {
             return await _schoolDbContext.Students.Include(h => h.Hostel).ToListAsync();
-            
+
             // Map the list of students to StudentToDisplayDto
         }
 
@@ -50,15 +50,13 @@ namespace School.API.Interfaces.studentsImplementations
 
         public async Task<Student?> UpdateAsync(long id, UpdateStudentDto updateStudentDto)
         {
-            var student = _schoolDbContext.Students.Find(id);
+            var student = await _schoolDbContext.Students.FindAsync(id);
             if (student == null) return null;
-         
-                student.Name = updateStudentDto.Name;
-                student.RegistrationNumber = updateStudentDto.RegistrationNumber;
-                student.DateOfJoin = updateStudentDto.DateOfJoin;
-                student.IsActive = updateStudentDto.IsActive;
-                student.CreatedOn = DateTime.Now;
-                student.CreatedBy = "system";
+
+            student.Name = updateStudentDto.Name;
+            student.RegistrationNumber = updateStudentDto.RegistrationNumber;
+            student.DateOfJoin = updateStudentDto.DateOfJoin;
+            student.IsActive = updateStudentDto.IsActive;
             
 
             await _schoolDbContext.SaveChangesAsync();

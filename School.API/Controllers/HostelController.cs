@@ -14,7 +14,7 @@ namespace School.API.Controllers
        
         private readonly IHostelService _hostelService;
 
-        public HostelController(SchoolDbContext schoolDbContext, IHostelService hostelService)
+        public HostelController(IHostelService hostelService)
         {
            
             _hostelService = hostelService;

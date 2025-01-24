@@ -29,7 +29,7 @@ namespace School.API.Controllers
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); };
             //dto for us to save in db we neeed to map to table.....model
-            var student =_mapper.Map<Student>(studentToCreateDto);
+            var student = _mapper.Map<Student>(studentToCreateDto);
             return Ok(await _studentService.CreateAsync(student));
         }
 
@@ -52,10 +52,10 @@ namespace School.API.Controllers
         [Route("{id:long}")]
         public async Task<IActionResult> PutAsyncById(long id, UpdateStudentDto updateStudentDto)
         {
-            var result = await _studentService.UpdateAsync(id, updateStudentDto);
-            if (result is null) return NotFound();
+            var student = await _studentService.UpdateAsync(id, updateStudentDto);
+            if (student is null) return NotFound();
 
-            return Ok(result);
+            return Ok(student);
 
         }
 

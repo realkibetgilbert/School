@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using School.API.Dto.Students;
+using School.API.Dto.Units;
 using School.MODEL;
 
 namespace School.API.Utils
@@ -8,10 +9,20 @@ namespace School.API.Utils
     {
         public MappingProfile()
         {
+            //mapping students
+            //s=>d
             CreateMap<StudentToCreateDto, Student>()
    .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now))
-   .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system"));
-            CreateMap<Student, StudentToDisplayDto>();
+   .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system")).ReverseMap();
+            //CreateMap<Student, StudentToDisplayDto>();
+
+            //mapping units
+            //s=>d
+            CreateMap<UnitToCreateDto, Unit>()
+   .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system"))
+   .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
+            // db=>ui
+            CreateMap<Unit, UnitToDisplayDto>().ReverseMap();
         }
     }
 }
