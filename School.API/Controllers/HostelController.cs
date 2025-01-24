@@ -25,14 +25,7 @@ namespace School.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] HostelToCreateDto hostelToCreateDto)
-        {
-            //var hostel = new Hostel
-            //{
-            //    Name = hostelToCreateDto.Name,
-            //    Description = hostelToCreateDto.Description,
-            //    CreatedOn = DateTime.Now,
-            //    CreatedBy = "system",
-            //};
+        { 
 
             var hostels = _mapper.Map<Hostel>(hostelToCreateDto);
             return Ok(await _hostelService.CreateAsync(hostels));
@@ -42,7 +35,8 @@ namespace School.API.Controllers
         [Route("{id:long}")]
         public async Task<IActionResult> GetAsync([FromRoute] long id)
         {
-            return Ok(await _hostelService.GetByIdAsync(id));
+            var hostel = await _hostelService.GetByIdAsync(id);
+            return Ok(_mapper.Map<HostelToDisplayDto>(hostel));
         }
 
         [HttpGet]
