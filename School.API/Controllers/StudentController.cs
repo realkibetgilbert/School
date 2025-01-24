@@ -36,7 +36,7 @@ namespace School.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            var students =await _studentService.GetAllAsync();
+            List<Student> students =await _studentService.GetAllAsync();
             return  Ok(_mapper.Map<List<StudentToDisplayDto>>(students));
 
         }
