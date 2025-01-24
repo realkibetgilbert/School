@@ -57,7 +57,7 @@ namespace School.API.Interfaces.studentsImplementations
             student.RegistrationNumber = updateStudentDto.RegistrationNumber;
             student.DateOfJoin = updateStudentDto.DateOfJoin;
             student.IsActive = updateStudentDto.IsActive;
-            
+
 
             await _schoolDbContext.SaveChangesAsync();
             return student;

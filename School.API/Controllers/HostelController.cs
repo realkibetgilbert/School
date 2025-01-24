@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Hostel;
@@ -13,24 +14,28 @@ namespace School.API.Controllers
     {
        
         private readonly IHostelService _hostelService;
+        private readonly IMapper _mapper;
 
-        public HostelController(IHostelService hostelService)
+        public HostelController(IHostelService hostelService, IMapper mapper)
         {
            
             _hostelService = hostelService;
+            _mapper = mapper;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] HostelToCreateDto hostelToCreateDto)
         {
-            var hostel = new Hostel
-            {
-                Name = hostelToCreateDto.Name,
-                Description = hostelToCreateDto.Description,
-                CreatedOn = DateTime.Now,
-                CreatedBy = "system",
-            };
-            return Ok(await _hostelService.CreateAsync(hostel));
+            //var hostel = new Hostel
+            //{
+            //    Name = hostelToCreateDto.Name,
+            //    Description = hostelToCreateDto.Description,
+            //    CreatedOn = DateTime.Now,
+            //    CreatedBy = "system",
+            //};
+
+            var hostels = _mapper.Map<Hostel>(hostelToCreateDto);
+            return Ok(await _hostelService.CreateAsync(hostels));
         }
 
         [HttpGet]

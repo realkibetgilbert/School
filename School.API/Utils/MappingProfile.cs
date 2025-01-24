@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using School.API.Dto.Hostel;
 using School.API.Dto.Students;
 using School.API.Dto.Units;
 using School.MODEL;
@@ -23,6 +24,12 @@ namespace School.API.Utils
    .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
             // db=>ui
             CreateMap<Unit, UnitToDisplayDto>().ReverseMap();
+
+            //mapping units 
+            //s=>d
+            CreateMap<HostelToCreateDto, Hostel>()
+  .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system"))
+  .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
         }
     }
 }
