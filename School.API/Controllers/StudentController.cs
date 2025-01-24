@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Students;
+using School.API.Dto.Units;
 using School.API.Interfaces.studentsImplementations;
 using School.API.Migrations;
 using School.MODEL;
@@ -16,18 +18,38 @@ namespace School.API.Controllers
 
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
+        private readonly IValidator<StudentToCreateDto> _validator;
 
-        public StudentController(IStudentService studentService, IMapper mapper)
+        public StudentController(IStudentService studentService, IMapper mapper,IValidator<StudentToCreateDto> validator)
         {
 
             _studentService = studentService;
             _mapper = mapper;
+            _validator = validator;
         }
         //https://localhost.com/api/Student/Create
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] StudentToCreateDto studentToCreateDto)
         {
-            if (!ModelState.IsValid) { return BadRequest(ModelState); };
+            var valid = await _validator.ValidateAsync(studentToCreateDto);
+            // Check if validation failed
+            if (!valid.IsValid)
+            {
+                // Extract errors and format them as a list of messages
+                var errors = valid.Errors.Select(e => new
+                {
+                    Field = e.PropertyName,
+                    ErrorMessage = e.ErrorMessage
+                });
+
+                // Return a 400 Bad Request response with the errors
+                return BadRequest(new
+                {
+                    Message = "Validation failed",
+                    Errors = errors
+                });
+            }
+            //if (!ModelState.IsValid) { return BadRequest(ModelState); };
             //dto for us to save in db we neeed to map to table.....model
             var student = _mapper.Map<Student>(studentToCreateDto);
             return Ok(await _studentService.CreateAsync(student));

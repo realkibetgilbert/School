@@ -1,9 +1,11 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Interfaces.implementations;
 using School.API.Interfaces.studentsImplementations;
 using School.API.Interfaces.unitsImplementations;
 using School.API.Utils;
+using School.API.Utils.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,10 @@ builder.Services.AddDbContext<SchoolDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolConnectionString")
 ));
 builder.Services.AddControllers();
+builder.Services.AddValidatorsFromAssemblyContaining<UnitDtoValidator>();
+
+
+
 //register services
 builder.Services.AddScoped<IHostelService, HostelService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
