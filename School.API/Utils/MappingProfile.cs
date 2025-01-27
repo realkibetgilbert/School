@@ -15,7 +15,7 @@ namespace School.API.Utils
             CreateMap<StudentToCreateDto, Student>()
    .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now))
    .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system")).ReverseMap();
-            CreateMap<Student, StudentToDisplayDto>();
+            CreateMap<Student, StudentToDisplayDto>().ReverseMap();
 
             //mapping units
             //s=>d
