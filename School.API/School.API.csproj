@@ -22,4 +22,8 @@
     <ProjectReference Include="..\School.MODEL\School.MODEL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Collection\" />
+  </ItemGroup>
+
 </Project>
