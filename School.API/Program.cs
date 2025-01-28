@@ -6,9 +6,19 @@ using School.API.Interfaces.studentsImplementations;
 using School.API.Interfaces.unitsImplementations;
 using School.API.Utils;
 using School.API.Utils.Validators;
+using Serilog.Events;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+               .WriteTo.File(
+               path: builder.Configuration.GetValue<string>("LogPath"),
+               outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm,ss.fff zzz}[{Level:u3}] {Message:lj}{NewLine}{Exception}",
+               rollingInterval: RollingInterval.Day,
+               restrictedToMinimumLevel: LogEventLevel.Information
+               ).CreateLogger();
 
+builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddDbContext<SchoolDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolConnectionString")
@@ -31,11 +41,11 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsProduction())
 {
+}
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 

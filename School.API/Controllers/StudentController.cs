@@ -19,47 +19,73 @@ namespace School.API.Controllers
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
         private readonly IValidator<StudentToCreateDto> _validator;
+        private readonly ILogger<StudentController> _logger;
 
-        public StudentController(IStudentService studentService, IMapper mapper,IValidator<StudentToCreateDto> validator)
+        public StudentController(IStudentService studentService, IMapper mapper, IValidator<StudentToCreateDto> validator, ILogger<StudentController> logger)
         {
 
             _studentService = studentService;
             _mapper = mapper;
             _validator = validator;
+            _logger = logger;
         }
         //https://localhost.com/api/Student/Create
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] StudentToCreateDto studentToCreateDto)
         {
-            var valid = await _validator.ValidateAsync(studentToCreateDto);
-            // Check if validation failed
-            if (!valid.IsValid)
+            try
             {
-                // Extract errors and format them as a list of messages
-                var errors = valid.Errors.Select(e => new
+                _logger.LogInformation($"regsistern studen pf reg no {studentToCreateDto.RegistrationNumber} strated");
+                //IsHostelFull();
+                var valid = await _validator.ValidateAsync(studentToCreateDto);
+                // Check if validation failed
+                if (!valid.IsValid)
                 {
-                    Field = e.PropertyName,
-                    ErrorMessage = e.ErrorMessage
-                });
+                    // Extract errors and format them as a list of messages
+                    var errors = valid.Errors.Select(e => new
+                    {
+                        Field = e.PropertyName,
+                        ErrorMessage = e.ErrorMessage
+                    });
 
-                // Return a 400 Bad Request response with the errors
-                return BadRequest(new
-                {
-                    Message = "Validation failed",
-                    Errors = errors
-                });
+                    // Return a 400 Bad Request response with the errors
+                    return BadRequest(new
+                    {
+                        Message = "Validation failed",
+                        Errors = errors
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest("something went wrong");
+
+
             }
             //if (!ModelState.IsValid) { return BadRequest(ModelState); };
             //dto for us to save in db we neeed to map to table.....model
             var student = _mapper.Map<Student>(studentToCreateDto);
+            _logger.LogInformation($"regsistern studen pf reg no {studentToCreateDto.RegistrationNumber} done");
             return Ok(await _studentService.CreateAsync(student));
+        }
+
+        private void IsHostelFull()
+        {
+            var hostelSize = 60;
+            if (hostelSize >= 60)
+            {
+
+                throw new Exception("Hostel is full the size of hall six is 60");
+
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            List<Student> students =await _studentService.GetAllAsync();
-            return  Ok(_mapper.Map<List<StudentToDisplayDto>>(students));
+            List<Student> students = await _studentService.GetAllAsync();
+            return Ok(_mapper.Map<List<StudentToDisplayDto>>(students));
 
         }
 
