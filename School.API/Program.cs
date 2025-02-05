@@ -8,6 +8,7 @@ using School.API.Utils;
 using School.API.Utils.Validators;
 using Serilog.Events;
 using Serilog;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
@@ -17,8 +18,8 @@ Log.Logger = new LoggerConfiguration()
                rollingInterval: RollingInterval.Day,
                restrictedToMinimumLevel: LogEventLevel.Information
                ).CreateLogger();
-
 builder.Host.UseSerilog();
+
 // Add services to the container.
 builder.Services.AddDbContext<SchoolDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolConnectionString")
@@ -50,7 +51,13 @@ if (app.Environment.IsProduction())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+    //options.WithOrigins("http://localhost:4200/");
+});
 app.MapControllers();
 
 app.Run();

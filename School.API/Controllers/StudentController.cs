@@ -35,7 +35,7 @@ namespace School.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"regsistern studen pf reg no {studentToCreateDto.RegistrationNumber} strated");
+                _logger.LogInformation($"Registration of student of reg no {studentToCreateDto.RegistrationNumber} strated");
                 //IsHostelFull();
                 var valid = await _validator.ValidateAsync(studentToCreateDto);
                 // Check if validation failed
@@ -48,7 +48,7 @@ namespace School.API.Controllers
                         ErrorMessage = e.ErrorMessage
                     });
 
-                    // Return a 400 Bad Request response with the errors
+                    // Return a 400 Bad Request response with the errorsmmm
                     return BadRequest(new
                     {
                         Message = "Validation failed",
@@ -66,7 +66,7 @@ namespace School.API.Controllers
             //if (!ModelState.IsValid) { return BadRequest(ModelState); };
             //dto for us to save in db we neeed to map to table.....model
             var student = _mapper.Map<Student>(studentToCreateDto);
-            _logger.LogInformation($"regsistern studen pf reg no {studentToCreateDto.RegistrationNumber} done");
+            _logger.LogInformation($"Registration of student of reg no {studentToCreateDto.RegistrationNumber} strated");
             return Ok(await _studentService.CreateAsync(student));
         }
 

@@ -32,7 +32,7 @@ namespace School.API.Interfaces.implementations
 
         public async Task<List<Hostel>> GetAllAsync()
         {
-            return await _schoolDbContext.Hostels.ToListAsync();
+            return await _schoolDbContext.Hostels.OrderByDescending(x=>x.Id).ToListAsync();
         }
 
         public async Task<Hostel?> GetByIdAsync(long id)
