@@ -85,7 +85,7 @@ namespace School.API.Controllers
             var result = await _hostelService.UpdateHostelAsync(id, updateHostelDto);
             if (result is null) return NotFound();
 
-            return Ok(result);
+            return Ok(_mapper.Map<HostelToDisplayDto>(result));
 
         }
 

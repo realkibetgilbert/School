@@ -105,7 +105,7 @@ namespace School.API.Controllers
             var student = await _studentService.UpdateAsync(id, updateStudentDto);
             if (student is null) return NotFound();
 
-            return Ok(student);
+            return Ok(_mapper.Map<StudentToDisplayDto>(student));
 
         }
 

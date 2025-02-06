@@ -91,7 +91,7 @@ namespace School.API.Controllers
             var result = await _unitService.UpdateUnitAsync(id, updateUnitDto);
             if (result is null) return NotFound();
 
-            return Ok(result);
+            return Ok(_mapper.Map<UnitToDisplayDto>(result));
         }
 
         [HttpDelete]
