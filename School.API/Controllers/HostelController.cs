@@ -33,25 +33,36 @@ namespace School.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] HostelToCreateDto hostelToCreateDto)
         {
-            var valid = await _validator.ValidateAsync(hostelToCreateDto);
-            if (!valid.IsValid)
+            try
             {
-                var errors = valid.Errors.Select(e => new
+                //_logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, strated");
+                var valid = await _validator.ValidateAsync(hostelToCreateDto);
+                if (!valid.IsValid)
                 {
-                    Field = e.PropertyName,
-                    ErrorMessage = e.ErrorMessage
-                });
+                    var errors = valid.Errors.Select(e => new
+                    {
+                        Field = e.PropertyName,
+                        ErrorMessage = e.ErrorMessage
+                    });
 
-                return BadRequest(new
-                {
-                    Message = "Validation failed",
-                    Errors = errors
-                });
+                    return BadRequest(new
+                    {
+                        Message = "Validation failed",
+                        Errors = errors
+                    });
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex.Message);
+                return BadRequest("Something went wrong");
+                
             }
             var hostel = _mapper.Map<Hostel>(hostelToCreateDto);
             await _hostelService.CreateAsync(hostel);
-            var hostelToDisplay = _mapper.Map<HostelToDisplayDto>(hostel);
-            return Ok(hostelToDisplay);
+            //_logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, ended");
+            return Ok(_mapper.Map<HostelToDisplayDto>(hostel));
         }
 
         [HttpGet]
