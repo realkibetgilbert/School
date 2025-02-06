@@ -3,6 +3,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
+using School.API.Dto.Students;
 using School.API.Dto.Units;
 using School.API.Interfaces.unitsImplementations;
 using School.MODEL;
@@ -13,44 +14,56 @@ namespace School.API.Controllers
     [ApiController]
     public class UnitController : ControllerBase
     {
-        private readonly SchoolDbContext schooDbContext;
+        
         private readonly IUnitService _unitService;
         private readonly IMapper _mapper;
         private readonly IValidator<UnitToCreateDto> _validator;
+        private readonly ILogger<UnitController> _logger;
 
-        public UnitController(SchoolDbContext schooDbContext, IUnitService unitService, IMapper mapper, IValidator<UnitToCreateDto> validator)
+        public UnitController(IUnitService unitService, IMapper mapper, IValidator<UnitToCreateDto> validator, ILogger<UnitController> logger)
         {
-            this.schooDbContext = schooDbContext;
+            
             _unitService = unitService;
             _mapper = mapper;
             _validator = validator;
+            _logger = logger;
         }
 
         //https://localhost.com/api/unit/create
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] UnitToCreateDto unitToCreateDto)
         {
-            var valid = await _validator.ValidateAsync(unitToCreateDto);
-            // Check if validation failed
-            if (!valid.IsValid)
+            try
             {
-                // Extract errors and format them as a list of messages
-                var errors = valid.Errors.Select(e => new
+                _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} strated");
+                var valid = await _validator.ValidateAsync(unitToCreateDto);
+                // Check if validation failed
+                if (!valid.IsValid)
                 {
-                    Field = e.PropertyName,
-                    ErrorMessage = e.ErrorMessage
-                });
+                    // Extract errors and format them as a list of messages
+                    var errors = valid.Errors.Select(e => new
+                    {
+                        Field = e.PropertyName,
+                        ErrorMessage = e.ErrorMessage
+                    });
 
-                // Return a 400 Bad Request response with the errors
-                return BadRequest(new
-                {
-                    Message = "Validation failed",
-                    Errors = errors
-                });
+                    // Return a 400 Bad Request response with the errors
+                    return BadRequest(new
+                    {
+                        Message = "Validation failed",
+                        Errors = errors
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
             }
 
             var unit = _mapper.Map<Unit>(unitToCreateDto);
-            return Ok(await _unitService.CreateAsync(unit));
+            await _unitService.CreateAsync(unit);
+            _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} ended");
+            return Ok(_mapper.Map<UnitToDisplayDto>(unit));
         }
 
         [HttpGet]
