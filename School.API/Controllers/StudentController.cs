@@ -35,7 +35,7 @@ namespace School.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"Registration of student of reg no {studentToCreateDto.RegistrationNumber} strated");
+                //_logger.LogInformation($"Registration of student of reg no {studentToCreateDto.RegistrationNumber} strated");
                 //IsHostelFull();
                 var valid = await _validator.ValidateAsync(studentToCreateDto);
                 // Check if validation failed
@@ -58,7 +58,7 @@ namespace School.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
                 return BadRequest("something went wrong");
 
 
@@ -67,7 +67,7 @@ namespace School.API.Controllers
             //dto for us to save in db we neeed to map to table.....model
             var student = _mapper.Map<Student>(studentToCreateDto);
             await _studentService.CreateAsync(student);
-            _logger.LogInformation($"Registration of student of reg no {studentToCreateDto.RegistrationNumber} ended");
+            //_logger.LogInformation($"Registration of student of reg no {studentToCreateDto.RegistrationNumber} ended");
             return Ok(_mapper.Map<StudentToDisplayDto>(student));
         }
 

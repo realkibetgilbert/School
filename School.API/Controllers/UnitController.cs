@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
@@ -31,11 +32,12 @@ namespace School.API.Controllers
 
         //https://localhost.com/api/unit/create
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAsync([FromBody] UnitToCreateDto unitToCreateDto)
         {
             try
             {
-                _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} strated");
+                //_logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} strated");
                 var valid = await _validator.ValidateAsync(unitToCreateDto);
                 // Check if validation failed
                 if (!valid.IsValid)
@@ -57,12 +59,12 @@ namespace School.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
             }
 
             var unit = _mapper.Map<Unit>(unitToCreateDto);
             await _unitService.CreateAsync(unit);
-            _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} ended");
+            //_logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} ended");
             return Ok(_mapper.Map<UnitToDisplayDto>(unit));
         }
 
@@ -81,6 +83,7 @@ namespace School.API.Controllers
             return Ok(_mapper.Map<UnitToDisplayDto>(unit));
         }
 
+        [HttpPut]
         [HttpPut]
         [Route("{id:long}")]
         public async Task<IActionResult> UpdateStudentAsync(long id, UpdateUnitDto updateUnitDto)
