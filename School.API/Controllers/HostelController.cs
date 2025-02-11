@@ -35,7 +35,7 @@ namespace School.API.Controllers
         {
             try
             {
-                //_logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, strated");
+                _logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, strated");
                 var valid = await _validator.ValidateAsync(hostelToCreateDto);
                 if (!valid.IsValid)
                 {
@@ -55,13 +55,13 @@ namespace School.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest("Something went wrong");
                 
             }
             var hostel = _mapper.Map<Hostel>(hostelToCreateDto);
             await _hostelService.CreateAsync(hostel);
-            //_logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, ended");
+            _logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, ended");
             return Ok(_mapper.Map<HostelToDisplayDto>(hostel));
         }
 
