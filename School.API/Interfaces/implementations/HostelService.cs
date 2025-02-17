@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.Dto.Hostel;
 using School.MODEL;
@@ -8,10 +9,12 @@ namespace School.API.Interfaces.implementations
     public class HostelService : IHostelService
     {
         private readonly SchoolDbContext _schoolDbContext;
+        private readonly IMapper _mapper;
 
-        public HostelService(SchoolDbContext schoolDbContext)
+        public HostelService(SchoolDbContext schoolDbContext, IMapper mapper)
         {
             _schoolDbContext = schoolDbContext;
+            _mapper = mapper;
         }
         public async Task<Hostel> CreateAsync(Hostel hostel)
         {
@@ -42,7 +45,7 @@ namespace School.API.Interfaces.implementations
 
         public async Task<Hostel?> UpdateHostelAsync(long id, UpdateHostelDto updateHostelDto)
         {
-            var hostel = await _schoolDbContext.Hostels.FindAsync(id);
+            var hostel =  await _schoolDbContext.Hostels.FindAsync(id);
 
             if (hostel == null) return null;
 
@@ -50,6 +53,7 @@ namespace School.API.Interfaces.implementations
             hostel.Description = updateHostelDto.Description;
             hostel.CreatedOn = DateTime.Now;
             hostel.CreatedBy = "System";
+
 
             await _schoolDbContext.SaveChangesAsync();
             return hostel;
