@@ -9,10 +9,10 @@ namespace School.API.Utils.Validators
         {
             RuleFor(h => h.Name)
                 .NotEmpty().WithMessage("Name is required")
-                .MinimumLength(3).WithMessage("Name should be atleas three characters");
+                .MinimumLength(3).WithMessage("Name should be atleast three characters.");
             RuleFor(h => h.Description)
                .NotEmpty().WithMessage("Description is required")
-               .MinimumLength(3).WithMessage("Description should be atleas three characters");
+               .MinimumLength(3).WithMessage("Description should be atleast three characters.");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.API.Data;
 using School.API.Dto.Hostel;
@@ -13,7 +14,6 @@ namespace School.API.Controllers
     [ApiController]
     public class HostelController : ControllerBase
     {
-        private readonly SchoolDbContext _schoolDbContext;
         private readonly IHostelService _hostelService;
         private readonly IMapper _mapper;
         private readonly ILogger<HostelController> _logger;
@@ -23,7 +23,6 @@ namespace School.API.Controllers
             IMapper mapper, ILogger<HostelController> logger, IValidator<HostelToCreateDto> validator
             )
         {
-            _schoolDbContext = schoolDbContext;
             _hostelService = hostelService;
             _mapper = mapper;
             _logger = logger;
@@ -31,11 +30,12 @@ namespace School.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAsync([FromBody] HostelToCreateDto hostelToCreateDto)
         {
             try
             {
-                //_logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, strated");
+                _logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, strated");
                 var valid = await _validator.ValidateAsync(hostelToCreateDto);
                 if (!valid.IsValid)
                 {
@@ -55,24 +55,26 @@ namespace School.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex.Message);
+                _logger.LogError(ex.Message);
                 return BadRequest("Something went wrong");
                 
             }
             var hostel = _mapper.Map<Hostel>(hostelToCreateDto);
             await _hostelService.CreateAsync(hostel);
-            //_logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, ended");
+            _logger.LogInformation($"Registration of hostel, {hostelToCreateDto.Name}, ended");
             return Ok(_mapper.Map<HostelToDisplayDto>(hostel));
         }
 
         [HttpGet]
         [Route("{id:long}")]
+        //[Authorize(Roles = "Student")]
         public async Task<IActionResult> GetAsync([FromRoute] long id)
         {
             return Ok(await _hostelService.GetByIdAsync(id));
         }
 
         [HttpGet]
+        //[Authorize(Roles = "Student")]
         public async Task<IActionResult> GetAsync()
         {
             return Ok(await _hostelService.GetAllAsync());
@@ -80,16 +82,18 @@ namespace School.API.Controllers
 
         [HttpPut]
         [Route("{id:long}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateHostelAsync(long id, UpdateHostelDto updateHostelDto)
         {
             var result = await _hostelService.UpdateHostelAsync(id, updateHostelDto);
             if (result is null) return NotFound();
 
-            return Ok(result);
+            return Ok(_mapper.Map<HostelToDisplayDto>(result));
 
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {

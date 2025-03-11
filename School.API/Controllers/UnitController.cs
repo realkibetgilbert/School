@@ -37,7 +37,7 @@ namespace School.API.Controllers
         {
             try
             {
-                //_logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} strated");
+                _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} started");
                 var valid = await _validator.ValidateAsync(unitToCreateDto);
                 // Check if validation failed
                 if (!valid.IsValid)
@@ -59,12 +59,12 @@ namespace School.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             var unit = _mapper.Map<Unit>(unitToCreateDto);
             await _unitService.CreateAsync(unit);
-            //_logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} ended");
+            _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} ended");
             return Ok(_mapper.Map<UnitToDisplayDto>(unit));
         }
 
@@ -91,7 +91,7 @@ namespace School.API.Controllers
             var result = await _unitService.UpdateUnitAsync(id, updateUnitDto);
             if (result is null) return NotFound();
 
-            return Ok(result);
+            return Ok(_mapper.Map<UnitToDisplayDto>(result));
         }
 
         [HttpDelete]

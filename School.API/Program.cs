@@ -14,6 +14,8 @@ using School.MODEL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using School.API.Interfaces;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<UnitDtoValidator>();
 builder.Services.AddScoped<IHostelService, HostelService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddIdentityCore<AuthUser>()
@@ -71,7 +74,72 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+
+{
+
+    options.SwaggerDoc("v1", new OpenApiInfo
+
+    {
+
+        Version = "v1",
+
+        Title = "School API",
+
+        Description = "This API Provides Endpoints For  School Operations",
+
+    });
+
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+
+    {
+
+        Name = "Authorization",
+
+        In = ParameterLocation.Header,
+
+        Type = SecuritySchemeType.ApiKey,
+
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+
+    {
+
+     {
+
+        new OpenApiSecurityScheme
+
+        {
+
+            Reference=new OpenApiReference
+
+            {
+
+                Type=ReferenceType.SecurityScheme,
+
+                Id=JwtBearerDefaults.AuthenticationScheme,
+
+            },
+
+            Scheme="Oauth2",
+
+            Name=JwtBearerDefaults.AuthenticationScheme,
+
+            In=ParameterLocation.Header,
+
+        },
+
+        new List<string>()
+
+    }
+
+    });
+
+});
+
 
 var app = builder.Build();
 
@@ -83,7 +151,6 @@ if (app.Environment.IsProduction())
     app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 app.UseCors(options =>
 {

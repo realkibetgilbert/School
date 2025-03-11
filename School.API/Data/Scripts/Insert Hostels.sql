@@ -1,0 +1,22 @@
+INSERT INTO [SchoolDb].[dbo].[Hostels] ([Name], [Description], [CreatedOn], [CreatedBy], [ModifiedOn], [ModifiedBy])
+VALUES
+('Alpha Hostel', 'A boys hostel near the main block', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Beta Hostel', 'A girls hostel with modern facilities', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Gamma Hostel', 'A hostel for senior students', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Delta Hostel', 'A new hostel with high security', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Epsilon Hostel', 'Spacious hostel with a gym facility', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Zeta Hostel', 'Affordable accommodation for students', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Eta Hostel', 'Premium hostel for postgraduate students', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Theta Hostel', 'Hostel with attached cafeteria', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Iota Hostel', 'Hostel with a large study hall', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Kappa Hostel', 'A quiet place for research students', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Lambda Hostel', 'Hostel with a rooftop relaxation area', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Mu Hostel', 'Affordable hostel near the sports complex', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Nu Hostel', 'Hostel with 24/7 medical assistance', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Xi Hostel', 'An eco-friendly hostel with solar power', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Omicron Hostel', 'A centrally located hostel for all', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Pi Hostel', 'Hostel with a dedicated tech lab', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Rho Hostel', 'A well-ventilated and green hostel', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Sigma Hostel', 'Hostel with extra co-curricular facilities', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Tau Hostel', 'Hostel with a library and digital lab', GETDATE(), 'Admin', GETDATE(), 'Admin'),
+('Upsilon Hostel', 'A newly built hostel with modern amenities', GETDATE(), 'Admin', GETDATE(), 'Admin');
