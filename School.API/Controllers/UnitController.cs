@@ -37,7 +37,7 @@ namespace School.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} strated");
+                _logger.LogInformation($"Registration of unit {unitToCreateDto.UnitName} started");
                 var valid = await _validator.ValidateAsync(unitToCreateDto);
                 // Check if validation failed
                 if (!valid.IsValid)

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.API.Data;
 using School.API.Dto.Hostel;
@@ -13,7 +14,6 @@ namespace School.API.Controllers
     [ApiController]
     public class HostelController : ControllerBase
     {
-        private readonly SchoolDbContext _schoolDbContext;
         private readonly IHostelService _hostelService;
         private readonly IMapper _mapper;
         private readonly ILogger<HostelController> _logger;
@@ -23,7 +23,6 @@ namespace School.API.Controllers
             IMapper mapper, ILogger<HostelController> logger, IValidator<HostelToCreateDto> validator
             )
         {
-            _schoolDbContext = schoolDbContext;
             _hostelService = hostelService;
             _mapper = mapper;
             _logger = logger;
@@ -31,6 +30,7 @@ namespace School.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAsync([FromBody] HostelToCreateDto hostelToCreateDto)
         {
             try
@@ -67,12 +67,14 @@ namespace School.API.Controllers
 
         [HttpGet]
         [Route("{id:long}")]
+        //[Authorize(Roles = "Student")]
         public async Task<IActionResult> GetAsync([FromRoute] long id)
         {
             return Ok(await _hostelService.GetByIdAsync(id));
         }
 
         [HttpGet]
+        //[Authorize(Roles = "Student")]
         public async Task<IActionResult> GetAsync()
         {
             return Ok(await _hostelService.GetAllAsync());
@@ -80,6 +82,7 @@ namespace School.API.Controllers
 
         [HttpPut]
         [Route("{id:long}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateHostelAsync(long id, UpdateHostelDto updateHostelDto)
         {
             var result = await _hostelService.UpdateHostelAsync(id, updateHostelDto);
@@ -90,6 +93,7 @@ namespace School.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         [Route("{id:long}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] long id)
         {
