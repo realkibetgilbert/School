@@ -143,6 +143,13 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+using (var scopee = app.Services.CreateScope())
+{
+    var dbContext = scopee.ServiceProvider.GetService<SchoolDbContext>();
+
+    dbContext.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsProduction())
 {
