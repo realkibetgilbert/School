@@ -67,17 +67,19 @@ namespace School.API.Controllers
 
         [HttpGet]
         [Route("{id:long}")]
-        //[Authorize(Roles = "Student")]
+        [Authorize(Roles = "Student")]
         public async Task<IActionResult> GetAsync([FromRoute] long id)
         {
             return Ok(await _hostelService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Student")]
-        public async Task<IActionResult> GetAsync()
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> GetAsync([FromQuery] int? pageNumber, int? pageSize)
         {
-            return Ok(await _hostelService.GetAllAsync());
+            var hostels = await _hostelService.GetAllAsync(pageNumber,pageSize);
+            var hostelToDisplay = _mapper.Map<List<HostelToDisplayDto>>(hostels);
+            return Ok(hostelToDisplay);
         }
 
         [HttpPut]
