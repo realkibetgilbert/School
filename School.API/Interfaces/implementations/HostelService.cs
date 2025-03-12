@@ -33,9 +33,14 @@ namespace School.API.Interfaces.implementations
             return hostel ?? null;
         }
 
-        public async Task<List<Hostel>> GetAllAsync()
+        public async Task<List<Hostel>> GetAllAsync(int? pageNumber = 1, int? pageSize = 10)
         {
-            return await _schoolDbContext.Hostels.OrderByDescending(x=>x.Id).ToListAsync();
+            var hostels = _schoolDbContext.Hostels.AsQueryable();
+
+            var skip = (pageNumber - 1) * pageSize;
+            hostels = hostels.Skip(skip ?? 0).Take(pageSize ?? 10);
+
+            return await hostels.ToListAsync();
         }
 
         public async Task<Hostel?> GetByIdAsync(long id)

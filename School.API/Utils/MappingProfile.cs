@@ -31,6 +31,7 @@ namespace School.API.Utils
   .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "system"))
   .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now)).ReverseMap();
 
+
             //db=>ui
             CreateMap<UpdateHostelDto, Hostel>()
    .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.Now))
