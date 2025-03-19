@@ -36,9 +36,15 @@ namespace School.API.Interfaces.studentsImplementations
             return student ?? null;
         }
 
-        public async Task<List<Student>> GetAllAsync()
+        public async Task<List<Student>> GetAllAsync(int? pageNumber = 1, int? pageSize = 10)
         {
-            return await _schoolDbContext.Students.Include(h => h.Hostel).ToListAsync();
+            var students = _schoolDbContext.Students.AsQueryable();
+
+            var skip = (pageNumber - 1) * pageSize;
+            students = students.Skip(skip ?? 0).Take(pageSize ?? 10);
+
+
+            return await students.Include(h => h.Hostel).ToListAsync();
 
             // Map the list of students to StudentToDisplayDto
         }

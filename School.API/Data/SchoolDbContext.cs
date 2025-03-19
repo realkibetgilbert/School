@@ -14,6 +14,7 @@ namespace School.API.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<Hostel> Hostels { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

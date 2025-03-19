@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.API.Data;
 
@@ -11,9 +12,11 @@ using School.API.Data;
 namespace School.API.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317115908_FileDetail")]
+    partial class FileDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,234 +264,202 @@ namespace School.API.Migrations
                         {
                             Id = 1L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6719),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7343),
                             Description = "A boys hostel near the main block",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6722),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7347),
                             Name = "Alpha Hostel"
                         },
                         new
                         {
                             Id = 2L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6730),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7351),
                             Description = "A girls hostel with modern facilities",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6731),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7352),
                             Name = "Beta Hostel"
                         },
                         new
                         {
                             Id = 3L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6733),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7354),
                             Description = "A hostel for senior students",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6734),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7354),
                             Name = "Gamma Hostel"
                         },
                         new
                         {
                             Id = 4L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6737),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7356),
                             Description = "A new hostel with high security",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6738),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7356),
                             Name = "Delta Hostel"
                         },
                         new
                         {
                             Id = 5L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6739),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7358),
                             Description = "Spacious hostel with a gym facility",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6740),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7359),
                             Name = "Epsilon Hostel"
                         },
                         new
                         {
                             Id = 6L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6741),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7360),
                             Description = "Affordable accommodation for students",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6742),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7360),
                             Name = "Zeta Hostel"
                         },
                         new
                         {
                             Id = 7L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6744),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7362),
                             Description = "Premium hostel for postgraduate students",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6746),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7362),
                             Name = "Eta Hostel"
                         },
                         new
                         {
                             Id = 8L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6748),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7364),
                             Description = "Hostel with attached cafeteria",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6748),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7365),
                             Name = "Theta Hostel"
                         },
                         new
                         {
                             Id = 9L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6750),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7376),
                             Description = "Hostel with a large study hall",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6751),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7377),
                             Name = "Iota Hostel"
                         },
                         new
                         {
                             Id = 10L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6752),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7378),
                             Description = "A quiet place for research students",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6753),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7379),
                             Name = "Kappa Hostel"
                         },
                         new
                         {
                             Id = 11L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6755),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7380),
                             Description = "Hostel with a rooftop relaxation area",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6756),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7381),
                             Name = "Lambda Hostel"
                         },
                         new
                         {
                             Id = 12L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6759),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7382),
                             Description = "Affordable hostel near the sports complex",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6760),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7383),
                             Name = "Mu Hostel"
                         },
                         new
                         {
                             Id = 13L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6762),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7384),
                             Description = "Hostel with 24/7 medical assistance",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6762),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7385),
                             Name = "Nu Hostel"
                         },
                         new
                         {
                             Id = 14L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6764),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7386),
                             Description = "An eco-friendly hostel with solar power",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6765),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7387),
                             Name = "Xi Hostel"
                         },
                         new
                         {
                             Id = 15L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6766),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7388),
                             Description = "A centrally located hostel for all",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6767),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7389),
                             Name = "Omicron Hostel"
                         },
                         new
                         {
                             Id = 16L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6769),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7390),
                             Description = "Hostel with a dedicated tech lab",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6769),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7391),
                             Name = "Pi Hostel"
                         },
                         new
                         {
                             Id = 17L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6771),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7392),
                             Description = "A well-ventilated and green hostel",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6772),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7393),
                             Name = "Rho Hostel"
                         },
                         new
                         {
                             Id = 18L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6773),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7394),
                             Description = "Hostel with extra co-curricular facilities",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6774),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7395),
                             Name = "Sigma Hostel"
                         },
                         new
                         {
                             Id = 19L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6775),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7396),
                             Description = "Hostel with a library and digital lab",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6776),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7397),
                             Name = "Tau Hostel"
                         },
                         new
                         {
                             Id = 20L,
                             CreatedBy = "Admin",
-                            CreatedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6778),
+                            CreatedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7398),
                             Description = "A newly built hostel with modern amenities",
                             ModifiedBy = "Admin",
-                            ModifiedOn = new DateTime(2025, 3, 18, 14, 51, 46, 465, DateTimeKind.Utc).AddTicks(6778),
+                            ModifiedOn = new DateTime(2025, 3, 17, 11, 59, 0, 141, DateTimeKind.Utc).AddTicks(7399),
                             Name = "Upsilon Hostel"
                         });
-                });
-
-            modelBuilder.Entity("School.MODEL.Image", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("School.MODEL.Student", b =>

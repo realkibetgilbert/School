@@ -19,7 +19,7 @@ namespace School.API.Controllers
         private readonly ILogger<HostelController> _logger;
         private readonly IValidator<HostelToCreateDto> _validator;
 
-        public HostelController(SchoolDbContext schoolDbContext, IHostelService hostelService,
+        public HostelController(IHostelService hostelService,
             IMapper mapper, ILogger<HostelController> logger, IValidator<HostelToCreateDto> validator
             )
         {

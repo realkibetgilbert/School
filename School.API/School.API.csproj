@@ -31,12 +31,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FileHandler\FileHandler.csproj" />
     <ProjectReference Include="..\School.MODEL\School.MODEL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Collection\" />
     <Folder Include="Data\Scripts\" />
+    <Folder Include="Images\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appveyor.json" /></VisualStudio></ProjectExtensions>

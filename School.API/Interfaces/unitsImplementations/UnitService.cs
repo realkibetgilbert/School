@@ -32,9 +32,14 @@ namespace School.API.Interfaces.unitsImplementations
             return unit ?? null;
         }
 
-        public async Task<List<Unit>> GetAllAsync()
+        public async Task<List<Unit>> GetAllAsync(int? pageNumber = 1, int? pageSize = 10)
         {
-            return await _schooDbContext.Units.ToListAsync();
+            var units = _schooDbContext.Units.AsQueryable();
+
+            var skip = (pageNumber - 1) * pageSize;
+            units = units.Skip(skip ?? 0).Take(pageSize ?? 10);
+
+            return await units.ToListAsync();
         }
 
         public async Task<Unit?> GetByIdAsync(long id)

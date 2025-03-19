@@ -69,9 +69,9 @@ namespace School.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync([FromQuery] int? pageNumber, int? pageSize)
         {
-            List<Unit> units = await _unitService.GetAllAsync();
+            List<Unit> units = await _unitService.GetAllAsync(pageNumber, pageSize);
             return Ok(_mapper.Map<List<UnitToDisplayDto>>(units));
         }
 
